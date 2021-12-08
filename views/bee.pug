@@ -1,0 +1,45 @@
+html
+    head
+        title Spelling Bee Helper
+        style
+            include css/bee.css
+    body
+        h1 Spelling Bee Helper
+        form#login(method="POST" action="/bee")
+            h2 Fill in all the fields
+            div
+                label(for="letters") Letters (as a word. ex 'abcdefg')
+                input(type="text" name="letters" id="letters" placeholder="" required autofocus maxlength="7" value=input.letters)
+            div
+                label(for="mustContain") Center Letter
+                input(type="text" name="mustContain" id="mustContain" placeholder="" required maxlength="1" value=input.mustContain)
+            div
+                label(for="length") Word Length
+                input(type="number" name="length" id="length" placeholder="" required min="4" max="99" value=input.length)
+            div
+                label(for="startsWith") Starts With
+                input(type="text" name="startsWith" id="startsWith" placeholder="" required value=input.startsWith)
+            div
+            button(type="submit") Go!
+
+        div#results
+            if results
+                if debug
+                    pre #{resultsRaw}
+                table
+                    thead
+                        tr
+                            th Dialect
+                            th Words
+                    tbody
+                        each result in results
+                            tr
+                                td
+                                    span #{result.dialect}
+                                td
+                                    each word in result.words
+                                        span #{word}
+                                        br
+
+
+
