@@ -20,7 +20,8 @@ function createServer(services) {
   app.use(bodyParser.json());
 
   app.get('/bee', (_req, res) => {
-    res.render('bee', { input: {
+    res.render('bee', {
+      input: {
         letters: '',
         mustContain: '',
         length: '',
@@ -28,6 +29,16 @@ function createServer(services) {
       }
     });
   });
+
+  app.get('/bee-remaining', (_req, res) => {
+    res.render('bee-remaining', {
+      input: {
+        grid: '',
+        twoletter: '',
+        found: ''
+      }
+    });
+  })
 
   app.post('/bee', (req, res) => {
     const {letters, mustContain, length, startsWith} = req.body;
@@ -53,6 +64,16 @@ function createServer(services) {
       }
     });
   });
+
+  app.post('/bee-remaining', (req, res) => {
+    const { grid, twoletter, found } = req.body;
+
+    const results = services.spellingBee.compareToHints(grid, twoletter, found);
+
+    res.render('bee-remaining', {
+      results, input: { grid, twoletter, found }
+    });
+  })
 
   return app;
 }

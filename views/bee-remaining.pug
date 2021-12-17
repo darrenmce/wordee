@@ -1,0 +1,52 @@
+html
+    head
+        title Spelling Bee Remaining Words Helper
+        style
+            include css/bee.css
+    body
+        h1 Spelling Bee Helper
+        form#login(method="POST" action="/bee-remaining")
+            h2 Fill in all the fields
+            div
+                label(for="grid") Paste the grid here
+                br
+                textarea(name="grid" id="grid" placeholder="" required autofocus)=input.grid
+            div
+                label(for="twoletter") Paste the two letter list here
+                br
+                textarea(name="twoletter" id="twoletter" placeholder="" required)=input.twoletter
+            div
+                label(for="found") Found Words
+                br
+                textarea(name="found" id="found" placeholder="")=input.found
+
+            div
+            button(type="submit") Go!
+
+        div#results
+            if results
+                hr
+                table
+                    thead
+                        tr
+                            th
+                            each length in results.lengths
+                                th #{length}
+                    tbody
+                        each letter in results.letters
+                            tr
+                                td
+                                    span #{letter}
+                                    each length in results.lengths
+                                        td
+                                            span #{results.grid[letter][length]}
+                hr
+                table
+                    each val, key in results.tl
+                        tr
+                            td #{key}
+                            td #{val}
+
+
+
+
